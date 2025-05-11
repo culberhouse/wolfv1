@@ -80,6 +80,10 @@ if "game" not in st.session_state:
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
+# Clear submit flag after rerun
+if st.session_state.get("submitted", False):
+    st.session_state.submitted = False
+
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
     st.session_state.submitted = False

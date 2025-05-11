@@ -148,7 +148,7 @@ else:
 
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 
-        if st.button("Submit Hole Result"):
+    if st.button("Submit Hole Result"):
     team = []
     partner = None
     if win_type == "team":

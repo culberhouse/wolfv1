@@ -1,5 +1,4 @@
 import os
-import pickle
 
 import streamlit as st
 import random
@@ -82,11 +81,6 @@ if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
 # Load game if saved
-if st.session_state.game is None and os.path.exists("game_state.pkl"):
-    try:
-        with open("game_state.pkl", "rb") as f:
-            st.session_state.game = pickle.load(f)
-    except Exception as e:
         st.warning("Could not load saved game. Starting fresh.")
         st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")
@@ -149,8 +143,6 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
 
         game.advance_hole()
-        with open("game_state.pkl", "wb") as f:
-            pickle.dump(game, f)
         st.success("Hole submitted. Move to next hole below.")
 
     st.divider()
@@ -163,3 +155,4 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
+

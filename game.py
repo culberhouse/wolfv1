@@ -75,6 +75,10 @@ st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
 
 if "game" not in st.session_state:
+    st.session_state.game = None
+
+if "submitted" not in st.session_state:
+    st.session_state.submitted = False
 
 if "submitted" not in st.session_state:
     st.session_state.submitted = False

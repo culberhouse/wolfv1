@@ -76,6 +76,7 @@ if "game" not in st.session_state:
 
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
+
     st.session_state.game = None
 
 st.title("🐺 Wolf Golf Score Tracker")
@@ -132,4 +133,3 @@ else:
         game.advance_hole()
         st.session_state.submitted = True
         st.experimental_rerun()
-

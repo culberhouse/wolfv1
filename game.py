@@ -158,12 +158,11 @@ else:
             st.success("Hole submitted. Click Next Hole to continue.")
 
     with col2:
+        if st.button("Next Hole"):
+            st.session_state.advance = True
     with col2:
         if st.button("Next Hole"):
             st.session_state.advance = True
-            st.stop()
-    st.divider()
-    st.subheader("Current Scores")
     scores = game.get_scores()
     for p in game.players:
         st.write(f"**{p}**: {scores.get(p, 0)} pts")
@@ -172,3 +171,4 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
+

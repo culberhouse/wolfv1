@@ -1,10 +1,8 @@
-import os
-
 import streamlit as st
+from collections import defaultdict, deque
 import random
-from collections import deque, defaultdict
 
-# Wolf game logic
+# Define WolfGame class
 class WolfGame:
     def __init__(self, players):
         self.players = players
@@ -41,12 +39,7 @@ class WolfGame:
             })
             return
 
-        multiplier = 1
-        if win_type == "solo_pre":
-            multiplier = 3
-        elif win_type == "solo_post":
-            multiplier = 2
-
+        multiplier = {"team": 1, "solo_post": 2, "solo_pre": 3}[win_type]
         total_points = (self.carry_over_points + 1) * multiplier
         for player in team:
             self.scores[player] += total_points
@@ -58,7 +51,6 @@ class WolfGame:
             'points_awarded': total_points,
             'carry_over': self.carry_over_points
         })
-
         self.carry_over_points = 0
 
     def advance_hole(self):
@@ -70,73 +62,37 @@ class WolfGame:
     def get_hole_summary(self):
         return self.hole_results
 
-# Streamlit UI
-st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
-
+# Streamlit app
+st.set_page_config("Wolf Golf App")
 
 if "game" not in st.session_state:
     st.session_state.game = None
-
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
-if "advance" in st.session_state and st.session_state.advance:
-    if st.session_state.game:
-        st.session_state.game.advance_hole()
-        st.session_state.advance = False
-        st.stop()
-
-# Clear submit flag after rerun
-if st.session_state.get("submitted", False):
-    st.session_state.submitted = False
-
-if "submitted" not in st.session_state:
-    st.session_state.submitted = False
-    st.session_state.submitted = False
-
-# Load game if saved
-    st.title("🐺 Wolf Golf Score Tracker")
-
-# Load game if saved
+st.title("🐺 Wolf Golf Score Tracker")
 
 if st.session_state.game is None:
     st.header("Setup Game")
     num_players = st.selectbox("Number of players", [3, 4])
-    player_names = []
-
-    for i in range(num_players):
-        name = st.text_input(f"Player {i + 1} name", key=f"name_{i}")
-        player_names.append(name)
-
+    player_names = [st.text_input(f"Player {i+1} name", key=f"name_{i}") for i in range(num_players)]
     if all(player_names):
         if st.button("Start Game"):
             st.session_state.game = WolfGame(player_names)
-            st.success("Game started. You can begin entering hole results.")
+            st.success("Game started. Proceed to first hole.")
             st.stop()
-
 else:
-    game = st.session_state.game
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")
     wolf = game.get_wolf_for_hole(game.current_hole)
     st.markdown(f"**Wolf this hole:** {wolf}")
-    # Show tee order for this hole
-    tee_order = []
-    wolf_index = game.rotation.index(wolf)
-    for i in range(game.num_players):
-        tee_order.append(game.rotation[(wolf_index + i) % game.num_players])
-        st.markdown("**Tee Order:** " + " → ".join(tee_order))
+    tee_order = [game.rotation[(game.rotation.index(wolf) + i) % game.num_players] for i in range(game.num_players)]
+    st.markdown("**Tee Order:** " + " → ".join(tee_order))
 
-    solo_type = st.radio("Did the Wolf go solo?", ["None", "Before Tee Shot (3x)", "After Tee Shot (2x)"])
-    win_type = {
-        "None": "team",
-        "Before Tee Shot (3x)": "solo_pre",
-        "After Tee Shot (2x)": "solo_post"
-    }[solo_type]
+    win_type_label = st.radio("Wolf's Choice", ["Team Play", "Solo After Tee (2x)", "Solo Before Tee (3x)"])
+    win_type = {"Team Play": "team", "Solo After Tee (2x)": "solo_post", "Solo Before Tee (3x)": "solo_pre"}[win_type_label]
 
     team = []
-    team = []
-    partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
         selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
@@ -147,23 +103,27 @@ else:
     else:
         team = [wolf]
 
-            winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
     if st.button("Submit Hole Result"):
-    team = []
-        partner = None
-    if win_type == "team":
-        partner_choices = [p for p in game.players if p != wolf]
-        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
-        if selected_partner != "None":
-            team = [wolf, selected_partner]
+        if winner == "Tie":
+            game.record_hole(wolf, [], win_type, is_tie=True)
+        elif winner == "Wolf's Team":
+            game.record_hole(wolf, team, win_type, is_tie=False)
         else:
-            team = [p for p in game.players if p != wolf]
-    else:
-        team = [wolf]
+            opponents = [p for p in game.players if p not in team]
+            game.record_hole(wolf, opponents, "team", is_tie=False)
+        game.advance_hole()
+        st.success("Hole submitted.")
+        st.stop()
 
-            winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
+    st.divider()
+    st.subheader("Current Scores")
+    for player, score in game.get_scores().items():
+        st.write(f"{player}: {score} pts")
 
-
-
+    st.divider()
+    st.subheader("Hole History")
+    for hole in game.get_hole_summary():
+        st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
 

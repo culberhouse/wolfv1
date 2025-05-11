@@ -134,39 +134,32 @@ else:
     }[solo_type]
 
     team = []
+    team = []
+    partner = None
     if win_type == "team":
-        partner_options = [p for p in game.players if p != wolf]
-        selected_partner = st.selectbox("Select partner (or None for solo)", ["None"] + partner_options, key=f"partner_{game.current_hole}")
-        if selected_partner != "None":
-            team = [wolf, selected_partner]
+        partner_choices = [p for p in game.players if p != wolf]
+        partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}")
+        if partner != "None":
+            team = [wolf, partner]
         else:
             team = [p for p in game.players if p != wolf]
     else:
         team = [wolf]
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 
-    col1, col2 = st.columns([1, 1])
-    with col1:
         if st.button("Submit Hole Result"):
-            if winner == "Tie":
-                game.record_hole(wolf, [], win_type, is_tie=True)
-            elif winner == "Wolf's Team":
-                game.record_hole(wolf, team, win_type, is_tie=False)
-            else:
-                opponents = [p for p in game.players if p not in team]
-                game.record_hole(wolf, opponents, "team", is_tie=False)
-            st.success("Hole submitted. Click Next Hole to continue.")
+    team = []
+    partner = None
+    if win_type == "team":
+        partner_choices = [p for p in game.players if p != wolf]
+        partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}")
+        if partner != "None":
+            team = [wolf, partner]
+        else:
+            team = [p for p in game.players if p != wolf]
+    else:
+        team = [wolf]
 
-    with col2:
-            st.session_state.advance = True
-    with col2:
-            st.session_state.advance = True
-    scores = game.get_scores()
-    for p in game.players:
-        st.write(f"**{p}**: {scores.get(p, 0)} pts")
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 
-    st.divider()
-    st.subheader("Hole History")
-    for result in game.get_hole_summary():
-        st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")

@@ -72,8 +72,11 @@ class WolfGame:
 # Streamlit UI
 st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
+if "game" not in st.session_state:
+
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
+    st.session_state.game = None
 
 st.title("🐺 Wolf Golf Score Tracker")
 
@@ -116,6 +119,7 @@ else:
 
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
+
     if st.button("Submit Hole Result"):
         if winner == "Tie":
             game.record_hole(wolf, [], win_type, is_tie=True)
@@ -125,29 +129,7 @@ else:
             opponents = [p for p in game.players if p not in team]
             game.record_hole(wolf, opponents, "team", is_tie=False)
 
-    game.advance_hole()
-    st.session_state.submitted = True
-    st.experimental_rerun()
-
-
         game.advance_hole()
-        st.success("Hole submitted. You can now score the next hole.")
-        st.stop()
-
-    st.divider()
-    st.subheader("Current Scores")
-    scores = game.get_scores()
-    for p in game.players:
-        st.write(f"**{p}**: {scores.get(p, 0)} pts")
-
-    st.divider()
-    st.subheader("Hole History")
-    for result in game.get_hole_summary():
-        st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
-
-
-    if st.button("Reset Game"):
-        st.session_state.game = None
-        st.success("Game reset. Please set up a new game.")
-        st.stop()
+        st.session_state.submitted = True
+        st.experimental_rerun()
 

@@ -1,3 +1,4 @@
+
 import streamlit as st
 import random
 from collections import deque, defaultdict
@@ -68,8 +69,7 @@ class WolfGame:
     def get_hole_summary(self):
         return self.hole_results
 
-
-# Streamlit App
+# Streamlit UI
 st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
 if "game" not in st.session_state:
@@ -95,7 +95,6 @@ if st.session_state.game is None:
 else:
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")
-
     wolf = game.get_wolf_for_hole(game.current_hole)
     st.markdown(f"**Wolf this hole:** {wolf}")
 
@@ -117,7 +116,7 @@ else:
 
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
-      if st.button("Submit Hole Result"):
+    if st.button("Submit Hole Result"):
         if winner == "Tie":
             game.record_hole(wolf, [], win_type, is_tie=True)
         elif winner == "Wolf's Team":
@@ -144,4 +143,3 @@ else:
     if st.button("Reset Game"):
         st.session_state.game = None
         st.experimental_rerun()
-

@@ -70,6 +70,14 @@ if "game" not in st.session_state:
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
+if "next_hole_ready" not in st.session_state:
+    st.session_state.next_hole_ready = False
+
+if st.session_state.next_hole_ready:
+    st.session_state.next_hole_ready = False
+        st.session_state.next_hole_ready = True
+        st.stop()
+
 if st.session_state.submitted:
     st.session_state.submitted = False
     st.session_state.submitted = False
@@ -116,7 +124,8 @@ else:
         else:
             opponents = [p for p in game.players if p not in team]
             game.record_hole(wolf, opponents, "team", is_tie=False)
-        game.advance_hole()
+        st.session_state.next_hole_ready = True
+        st.stop()
         st.session_state.submitted = True
 
     st.divider()

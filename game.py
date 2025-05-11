@@ -84,7 +84,7 @@ if "advance" in st.session_state and st.session_state.advance:
     if st.session_state.game:
         st.session_state.game.advance_hole()
     st.session_state.advance = False
-    st.experimental_rerun()
+    st.stop()
 
 # Clear submit flag after rerun
 if st.session_state.get("submitted", False):
@@ -169,3 +169,4 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
+

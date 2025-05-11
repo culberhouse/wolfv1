@@ -149,5 +149,5 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
 
         game.advance_hole()
-        st.experimental_rerun()
-
+    st.success("Game reset. You can now set up a new game.")
+    st.stop()

@@ -83,8 +83,8 @@ if "submitted" not in st.session_state:
 if "advance" in st.session_state and st.session_state.advance:
     if st.session_state.game:
         st.session_state.game.advance_hole()
-    st.session_state.advance = False
-    st.stop()
+        st.session_state.advance = False
+        st.stop()
 
 # Clear submit flag after rerun
 if st.session_state.get("submitted", False):
@@ -95,7 +95,7 @@ if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
 # Load game if saved
-st.title("🐺 Wolf Golf Score Tracker")
+    st.title("🐺 Wolf Golf Score Tracker")
 
 # Load game if saved
 
@@ -125,7 +125,7 @@ else:
     wolf_index = game.rotation.index(wolf)
     for i in range(game.num_players):
         tee_order.append(game.rotation[(wolf_index + i) % game.num_players])
-    st.markdown("**Tee Order:** " + " → ".join(tee_order))
+        st.markdown("**Tee Order:** " + " → ".join(tee_order))
 
     solo_type = st.radio("Did the Wolf go solo?", ["None", "Before Tee Shot (3x)", "After Tee Shot (2x)"])
     win_type = {
@@ -134,12 +134,12 @@ else:
         "After Tee Shot (2x)": "solo_post"
     }[solo_type]
 
-    team = []
-    team = []
+        team = []
+        team = []
     partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-    selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
+        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:
@@ -147,14 +147,14 @@ else:
     else:
         team = [wolf]
 
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
+            winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
     if st.button("Submit Hole Result"):
         team = []
         partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-    selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
+        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:
@@ -162,7 +162,7 @@ else:
     else:
         team = [wolf]
 
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
+            winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
 
 

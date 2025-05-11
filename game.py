@@ -140,8 +140,9 @@ else:
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
 
-  if st.button("Reset Game"):
-    st.session_state.game = None
-    st.success("Game reset. Please set up a new game.")
-    st.stop()
+
+    if st.button("Reset Game"):
+        st.session_state.game = None
+        st.success("Game reset. Please set up a new game.")
+        st.stop()
 

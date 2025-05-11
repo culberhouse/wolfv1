@@ -113,6 +113,12 @@ else:
     st.subheader(f"Hole {game.current_hole}")
     wolf = game.get_wolf_for_hole(game.current_hole)
     st.markdown(f"**Wolf this hole:** {wolf}")
+    # Show tee order for this hole
+    tee_order = []
+    wolf_index = game.rotation.index(wolf)
+    for i in range(game.num_players):
+        tee_order.append(game.rotation[(wolf_index + i) % game.num_players])
+    st.markdown("**Tee Order:** " + " → ".join(tee_order))
 
     solo_type = st.radio("Did the Wolf go solo?", ["None", "Before Tee Shot (3x)", "After Tee Shot (2x)"])
     win_type = {

@@ -139,7 +139,9 @@ else:
     partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}_{wolf}")
+        import uuid
+        unique_key = f"partner_{uuid.uuid4()}"
+        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=unique_key)
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:
@@ -154,7 +156,9 @@ else:
         partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}_{wolf}")
+        import uuid
+        unique_key = f"partner_{uuid.uuid4()}"
+        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=unique_key)
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:

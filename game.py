@@ -145,18 +145,6 @@ else:
             team = [p for p in game.players if p != wolf]
     else:
         team = [wolf]
-            partner_choices = [p for p in game.players if p != wolf]
-            selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}")
-            if selected_partner != "None":
-                team = [wolf, selected_partner]
-            else:
-                team = [p for p in game.players if p != wolf]
-        else:
-            team = [wolf]
-            team = [p for p in game.players if p != wolf]
-    else:
-        team = [wolf]
-
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 
     if st.button("Submit Hole Result"):
@@ -170,17 +158,6 @@ else:
         else:
             team = [p for p in game.players if p != wolf]
     else:
-        team = [wolf]
-            partner_choices = [p for p in game.players if p != wolf]
-            selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}")
-            if selected_partner != "None":
-                team = [wolf, selected_partner]
-            else:
-                team = [p for p in game.players if p != wolf]
-        else:
-            team = [wolf]
-        team = [p for p in game.players if p != wolf]
-        else:
         team = [wolf]
                 winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 

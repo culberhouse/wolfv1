@@ -125,9 +125,9 @@ else:
         else:
             opponents = [p for p in game.players if p not in team]
             game.record_hole(wolf, opponents, "team", is_tie=False)
-
-        game.advance_hole()
-        st.experimental_rerun()
+ game.advance_hole()
+    st.success("Hole submitted. You can now score the next hole.")
+    st.stop()
 
     st.divider()
     st.subheader("Current Scores")

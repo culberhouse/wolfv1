@@ -159,6 +159,6 @@ else:
             team = [p for p in game.players if p != wolf]
     else:
         team = [wolf]
-                winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
 
 

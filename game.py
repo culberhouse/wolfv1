@@ -81,7 +81,6 @@ if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
 # Load game if saved
-        st.warning("Could not load saved game. Starting fresh.")
         st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")
 
@@ -155,4 +154,6 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
+
+
 

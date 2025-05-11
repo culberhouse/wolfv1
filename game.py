@@ -149,5 +149,17 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
 
         game.advance_hole()
-    st.success("Game reset. You can now set up a new game.")
-    st.stop()
+        with open("game_state.pkl", "wb") as f:
+            pickle.dump(game, f)
+        st.success("Hole submitted. Move to next hole below.")
+
+    st.divider()
+    st.subheader("Current Scores")
+    scores = game.get_scores()
+    for p in game.players:
+        st.write(f"**{p}**: {scores.get(p, 0)} pts")
+
+    st.divider()
+    st.subheader("Hole History")
+    for result in game.get_hole_summary():
+        st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")

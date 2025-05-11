@@ -143,5 +143,5 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
 
         game.advance_hole()
-            pickle.dump(game, f)
         st.experimental_rerun()
+

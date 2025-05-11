@@ -149,7 +149,9 @@ else:
     else:
         team = [wolf]
 
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
+    import uuid
+    winner_key = f"winner_{uuid.uuid4()}"
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=winner_key)
 
     if st.button("Submit Hole Result"):
         team = []
@@ -166,7 +168,9 @@ else:
     else:
         team = [wolf]
 
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
+    import uuid
+    winner_key = f"winner_{uuid.uuid4()}"
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=winner_key)
 
 
 

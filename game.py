@@ -130,3 +130,4 @@ else:
     st.subheader("Hole History")
     for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
+

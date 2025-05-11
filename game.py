@@ -144,7 +144,3 @@ else:
         st.session_state.game = None
         st.experimental_rerun()
 
-
-
-if __name__ == "__main__":
-    run_wolf_console_game()

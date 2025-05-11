@@ -128,13 +128,14 @@ else:
         st.stop()
         st.session_state.submitted = True
 
-    st.divider()
-    st.subheader("Current Scores")
-    for player, score in game.get_scores().items():
+        st.divider()
+        st.subheader("Current Scores")
+        for player, score in game.get_scores().items():
         st.write(f"{player}: {score} pts")
 
-    st.divider()
-    st.subheader("Hole History")
-    for hole in game.get_hole_summary():
+        st.divider()
+        st.subheader("Hole History")
+        for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
+
 

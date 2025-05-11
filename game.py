@@ -1,3 +1,5 @@
+import os
+import pickle
 
 import streamlit as st
 import random
@@ -72,14 +74,27 @@ class WolfGame:
 # Streamlit UI
 st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
+
 if "game" not in st.session_state:
+    st.session_state.game = None
 
 if "submitted" not in st.session_state:
+    st.session_state.submitted = False
+
+# Load game if saved
+if st.session_state.game is None and os.path.exists("game_state.pkl"):
+    with open("game_state.pkl", "rb") as f:
+        st.session_state.game = pickle.load(f)
+
     st.session_state.submitted = False
 
     st.session_state.game = None
 
 st.title("🐺 Wolf Golf Score Tracker")
+
+# Load game if saved
+    with open("game_state.pkl", "rb") as f:
+        st.session_state.game = pickle.load(f)
 
 if st.session_state.game is None:
     st.header("Setup Game")
@@ -132,4 +147,6 @@ else:
 
         game.advance_hole()
         st.session_state.submitted = True
+        with open("game_state.pkl", "wb") as f:
+            pickle.dump(game, f)
         st.experimental_rerun()

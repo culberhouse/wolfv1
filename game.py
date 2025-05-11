@@ -83,8 +83,12 @@ if "submitted" not in st.session_state:
 
 # Load game if saved
 if st.session_state.game is None and os.path.exists("game_state.pkl"):
-    with open("game_state.pkl", "rb") as f:
-        st.session_state.game = pickle.load(f)
+    try:
+        with open("game_state.pkl", "rb") as f:
+            st.session_state.game = pickle.load(f)
+    except Exception as e:
+        st.warning("Could not load saved game. Starting fresh.")
+        st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")
 
 # Load game if saved

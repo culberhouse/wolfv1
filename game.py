@@ -118,12 +118,12 @@ else:
 
     if st.button("Submit Hole Result"):
         if winner == "Tie":
-            game.record_hole(wolf, [], win_type, is_tie=True)
+        game.record_hole(wolf, [], win_type, is_tie=True)
         elif winner == "Wolf's Team":
-            game.record_hole(wolf, team, win_type, is_tie=False)
+        game.record_hole(wolf, team, win_type, is_tie=False)
         else:
-            opponents = [p for p in game.players if p not in team]
-            game.record_hole(wolf, opponents, "team", is_tie=False)
+        opponents = [p for p in game.players if p not in team]
+        game.record_hole(wolf, opponents, "team", is_tie=False)
         st.session_state.next_hole_ready = True
         st.stop()
         st.session_state.submitted = True
@@ -137,3 +137,4 @@ else:
     st.subheader("Hole History")
     for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
+

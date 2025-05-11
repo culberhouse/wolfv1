@@ -70,6 +70,11 @@ if "game" not in st.session_state:
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
+if st.session_state.submitted:
+    st.session_state.submitted = False
+    st.experimental_rerun()
+    st.session_state.submitted = False
+
 st.title("🐺 Wolf Golf Score Tracker")
 
 if st.session_state.game is None:
@@ -80,7 +85,6 @@ if st.session_state.game is None:
         if st.button("Start Game"):
             st.session_state.game = WolfGame(player_names)
             st.success("Game started. Proceed to first hole.")
-            st.stop()
 else:
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")
@@ -114,8 +118,8 @@ else:
             opponents = [p for p in game.players if p not in team]
             game.record_hole(wolf, opponents, "team", is_tie=False)
         game.advance_hole()
-        st.success("Hole submitted.")
-        st.stop()
+        st.session_state.submitted = True
+        st.experimental_rerun()
 
     st.divider()
     st.subheader("Current Scores")
@@ -126,4 +130,3 @@ else:
     st.subheader("Hole History")
     for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
-

@@ -89,14 +89,6 @@ if st.session_state.game is None and os.path.exists("game_state.pkl"):
     except Exception as e:
         st.warning("Could not load saved game. Starting fresh.")
         st.session_state.game = None
-    st.session_state.game = None
-
-
-# Load game if saved
-    try:
-        except Exception as e:
-            st.warning("Could not load saved game. Starting fresh.")
-            st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")
 
 # Load game if saved
@@ -153,4 +145,3 @@ else:
         game.advance_hole()
             pickle.dump(game, f)
         st.experimental_rerun()
-

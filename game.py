@@ -72,8 +72,8 @@ class WolfGame:
 # Streamlit UI
 st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
-if "game" not in st.session_state:
-    st.session_state.game = None
+if "submitted" not in st.session_state:
+    st.session_state.submitted = False
 
 st.title("🐺 Wolf Golf Score Tracker")
 
@@ -124,6 +124,11 @@ else:
         else:
             opponents = [p for p in game.players if p not in team]
             game.record_hole(wolf, opponents, "team", is_tie=False)
+
+    game.advance_hole()
+    st.session_state.submitted = True
+    st.experimental_rerun()
+
 
         game.advance_hole()
         st.success("Hole submitted. You can now score the next hole.")

@@ -88,10 +88,8 @@ if st.session_state.game is None:
    if all(player_names):
     if st.button("Start Game"):
         st.session_state.game = WolfGame(player_names)
-        st.success("Game started. Please wait...")
-        st.stop()  # Cleanly stop instead of forcing rerun
-
-
+        st.success("Game started. Please continue...")
+        st.stop()  # Prevent execution of rest of script
 else:
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")

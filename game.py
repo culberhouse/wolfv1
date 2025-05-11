@@ -139,9 +139,7 @@ else:
     partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-        import uuid
-        unique_key = f"partner_{uuid.uuid4()}"
-        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=unique_key)
+    selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:
@@ -149,18 +147,14 @@ else:
     else:
         team = [wolf]
 
-    import uuid
-    winner_key = f"winner_{uuid.uuid4()}"
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=winner_key)
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
     if st.button("Submit Hole Result"):
         team = []
         partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
-        import uuid
-        unique_key = f"partner_{uuid.uuid4()}"
-        selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=unique_key)
+    selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_select_{game.current_hole}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
         else:
@@ -168,9 +162,7 @@ else:
     else:
         team = [wolf]
 
-    import uuid
-    winner_key = f"winner_{uuid.uuid4()}"
-    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=winner_key)
+    winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
 
 

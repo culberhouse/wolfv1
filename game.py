@@ -126,6 +126,15 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
         st.session_state.next_hole_ready = True
         st.stop()
+        if winner == "Tie":
+            game.record_hole(wolf, [], win_type, is_tie=True)
+        elif winner == "Wolf's Team":
+            game.record_hole(wolf, team, win_type, is_tie=False)
+        else:
+            opponents = [p for p in game.players if p not in team]
+            game.record_hole(wolf, opponents, "team", is_tie=False)
+        st.session_state.next_hole_ready = True
+        st.stop()
         st.divider()
         st.subheader("Current Scores")
         for player, score in game.get_scores().items():

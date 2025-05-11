@@ -75,13 +75,11 @@ st.set_page_config(page_title="Wolf Golf Score Tracker", layout="centered")
 
 
 if "game" not in st.session_state:
-    st.session_state.game = None
 
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
 
 # Load game if saved
-        st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")
 
 # Load game if saved
@@ -154,6 +152,5 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
-
 
 

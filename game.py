@@ -154,7 +154,7 @@ else:
     with col2:
         if st.button("Next Hole"):
             game.advance_hole()
-            st.experimental_rerun()
+            st.stop()
     st.divider()
     st.subheader("Current Scores")
     scores = game.get_scores()

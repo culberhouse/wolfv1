@@ -133,13 +133,16 @@ else:
         "After Tee Shot (2x)": "solo_post"
     }[solo_type]
 
+    team = []
     if win_type == "team":
-        possible_partners = [p for p in game.players if p != wolf]
-        partner = st.selectbox("Select partner (optional)", ["None"] + possible_partners)
-        if partner != "None":
-            team = [wolf, partner]
+        partner_options = [p for p in game.players if p != wolf]
+        selected_partner = st.selectbox("Select partner (or None for solo)", ["None"] + partner_options, key=f"partner_{game.current_hole}")
+        if selected_partner != "None":
+            team = [wolf, selected_partner]
         else:
             team = [p for p in game.players if p != wolf]
+    else:
+        team = [wolf]
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
 
@@ -167,4 +170,3 @@ else:
     st.subheader("Hole History")
     for result in game.get_hole_summary():
         st.markdown(f"**Hole {result['hole']}**: {result['result']} — {result['points_awarded']} points")
-

@@ -2,7 +2,7 @@ import streamlit as st
 from collections import defaultdict, deque
 import random
 
-# Define WolfGame class
+# WolfGame class to handle game state
 class WolfGame:
     def __init__(self, players):
         self.players = players
@@ -62,25 +62,22 @@ class WolfGame:
     def get_hole_summary(self):
         return self.hole_results
 
-# Streamlit app
+
+# --- Streamlit App Logic ---
+
 st.set_page_config("Wolf Golf App")
 
 if "game" not in st.session_state:
     st.session_state.game = None
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
-
 if "next_hole_ready" not in st.session_state:
     st.session_state.next_hole_ready = False
 
+# Check if we should advance the hole
 if st.session_state.next_hole_ready:
     st.session_state.next_hole_ready = False
-        st.session_state.next_hole_ready = True
-        st.stop()
-
-if st.session_state.submitted:
-    st.session_state.submitted = False
-    st.session_state.submitted = False
+    st.session_state.game.advance_hole()
 
 st.title("🐺 Wolf Golf Score Tracker")
 
@@ -92,6 +89,7 @@ if st.session_state.game is None:
         if st.button("Start Game"):
             st.session_state.game = WolfGame(player_names)
             st.success("Game started. Proceed to first hole.")
+            st.stop()
 else:
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")
@@ -126,31 +124,14 @@ else:
             game.record_hole(wolf, opponents, "team", is_tie=False)
         st.session_state.next_hole_ready = True
         st.stop()
-        if winner == "Tie":
-            game.record_hole(wolf, [], win_type, is_tie=True)
-        elif winner == "Wolf's Team":
-            game.record_hole(wolf, team, win_type, is_tie=False)
-        else:
-            opponents = [p for p in game.players if p not in team]
-            game.record_hole(wolf, opponents, "team", is_tie=False)
-        st.session_state.next_hole_ready = True
-        st.stop()
-        if winner == "Tie":
-            game.record_hole(wolf, [], win_type, is_tie=True)
-        elif winner == "Wolf's Team":
-            game.record_hole(wolf, team, win_type, is_tie=False)
-        else:
-            opponents = [p for p in game.players if p not in team]
-            game.record_hole(wolf, opponents, "team", is_tie=False)
-        st.session_state.next_hole_ready = True
-        st.stop()
-        st.divider()
-        st.subheader("Current Scores")
-        for player, score in game.get_scores().items():
+
+    st.divider()
+    st.subheader("Current Scores")
+    for player, score in game.get_scores().items():
         st.write(f"{player}: {score} pts")
 
-        st.divider()
-        st.subheader("Hole History")
-        for hole in game.get_hole_summary():
+    st.divider()
+    st.subheader("Hole History")
+    for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
 

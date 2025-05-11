@@ -114,7 +114,8 @@ if st.session_state.game is None:
             st.success("Game started. You can begin entering hole results.")
             st.stop()
 
-        else:
+else:
+    game = st.session_state.game
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")
     wolf = game.get_wolf_for_hole(game.current_hole)
@@ -141,8 +142,10 @@ if st.session_state.game is None:
     selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}_{wolf}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
+else:
         else:
             team = [p for p in game.players if p != wolf]
+else:
         else:
         team = [wolf]
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
@@ -155,10 +158,13 @@ if st.session_state.game is None:
     selected_partner = st.selectbox("Wolf Partner", ["None"] + partner_choices, key=f"partner_{game.current_hole}_{wolf}")
         if selected_partner != "None":
             team = [wolf, selected_partner]
+else:
         else:
             team = [p for p in game.players if p != wolf]
+else:
         else:
         team = [wolf]
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_{game.current_hole}")
+
 
 

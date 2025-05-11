@@ -145,3 +145,4 @@ else:
         for hole in game.get_hole_summary():
         st.markdown(f"Hole {hole['hole']}: {hole['result']} — {hole['points_awarded']} points")
 
+

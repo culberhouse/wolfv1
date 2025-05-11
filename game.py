@@ -139,18 +139,22 @@ else:
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
 
-    if st.button("Submit Hole Result"):
-        if winner == "Tie":
-            game.record_hole(wolf, [], win_type, is_tie=True)
-        elif winner == "Wolf's Team":
-            game.record_hole(wolf, team, win_type, is_tie=False)
-        else:
-            opponents = [p for p in game.players if p not in team]
-            game.record_hole(wolf, opponents, "team", is_tie=False)
+    col1, col2 = st.columns([1, 1])
+    with col1:
+        if st.button("Submit Hole Result"):
+            if winner == "Tie":
+                game.record_hole(wolf, [], win_type, is_tie=True)
+            elif winner == "Wolf's Team":
+                game.record_hole(wolf, team, win_type, is_tie=False)
+            else:
+                opponents = [p for p in game.players if p not in team]
+                game.record_hole(wolf, opponents, "team", is_tie=False)
+            st.success("Hole submitted. Click Next Hole to continue.")
 
-        game.advance_hole()
-        st.success("Hole submitted. Move to next hole below.")
-
+    with col2:
+        if st.button("Next Hole"):
+            game.advance_hole()
+            st.experimental_rerun()
     st.divider()
     st.subheader("Current Scores")
     scores = game.get_scores()

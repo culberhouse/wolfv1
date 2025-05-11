@@ -83,13 +83,15 @@ if st.session_state.game is None:
     player_names = []
 
     for i in range(num_players):
-        player_names.append(st.text_input(f"Player {i + 1} name"))
+        name = st.text_input(f"Player {i + 1} name", key=f"name_{i}")
+        player_names.append(name)
 
-   if all(player_names):
-    if st.button("Start Game"):
-        st.session_state.game = WolfGame(player_names)
-        st.success("Game started. Please continue...")
-        st.stop()  # Prevent execution of rest of script
+    if all(player_names):
+        if st.button("Start Game"):
+            st.session_state.game = WolfGame(player_names)
+            st.success("Game started. You can begin entering hole results.")
+            st.stop()
+
 else:
     game = st.session_state.game
     st.subheader(f"Hole {game.current_hole}")

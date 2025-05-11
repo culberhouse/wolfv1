@@ -134,8 +134,8 @@ else:
         "After Tee Shot (2x)": "solo_post"
     }[solo_type]
 
-        team = []
-        team = []
+    team = []
+    team = []
     partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
@@ -150,7 +150,7 @@ else:
             winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
 
     if st.button("Submit Hole Result"):
-        team = []
+    team = []
         partner = None
     if win_type == "team":
         partner_choices = [p for p in game.players if p != wolf]
@@ -163,6 +163,7 @@ else:
         team = [wolf]
 
             winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"], key=f"winner_select_{game.current_hole}")
+
 
 
 

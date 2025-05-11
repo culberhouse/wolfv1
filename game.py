@@ -94,7 +94,7 @@ if st.session_state.game is None and os.path.exists("game_state.pkl"):
 
 # Load game if saved
     try:
-    except Exception as e:
+        except Exception as e:
         st.warning("Could not load saved game. Starting fresh.")
         st.session_state.game = None
 st.title("🐺 Wolf Golf Score Tracker")

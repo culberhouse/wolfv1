@@ -134,14 +134,12 @@ else:
     }[solo_type]
 
     if win_type == "team":
-        partner = st.selectbox("Select partner (optional)", ["None"] + [p for p in game.players if p != wolf])
+        possible_partners = [p for p in game.players if p != wolf]
+        partner = st.selectbox("Select partner (optional)", ["None"] + possible_partners)
         if partner != "None":
             team = [wolf, partner]
         else:
             team = [p for p in game.players if p != wolf]
-    else:
-        team = [wolf]
-
     winner = st.radio("Who won the hole?", ["Wolf's Team", "Opponents", "Tie"])
 
 

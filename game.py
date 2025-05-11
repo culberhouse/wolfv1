@@ -78,6 +78,7 @@ if "game" not in st.session_state:
 
 if "submitted" not in st.session_state:
     st.session_state.submitted = False
+    st.session_state.submitted = False
 
 # Load game if saved
 st.title("🐺 Wolf Golf Score Tracker")

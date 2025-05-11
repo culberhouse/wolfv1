@@ -93,7 +93,7 @@ st.title("🐺 Wolf Golf Score Tracker")
 
 # Load game if saved
     with open("game_state.pkl", "rb") as f:
-        st.session_state.game = pickle.load(f)
+    st.session_state.game = pickle.load(f)
 
 if st.session_state.game is None:
     st.header("Setup Game")

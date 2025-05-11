@@ -85,9 +85,12 @@ if st.session_state.game is None:
     for i in range(num_players):
         player_names.append(st.text_input(f"Player {i + 1} name"))
 
-    if all(player_names) and st.button("Start Game"):
+   if all(player_names):
+    if st.button("Start Game"):
         st.session_state.game = WolfGame(player_names)
-        st.experimental_rerun()
+        st.success("Game started. Please wait...")
+        st.stop()  # Cleanly stop instead of forcing rerun
+
 
 else:
     game = st.session_state.game
